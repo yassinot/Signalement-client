@@ -8,18 +8,20 @@ import { AuthGuard } from './services/auth.guard';
 import { LoggedInAuthGuard } from './services/loggedin.guard';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 @NgModule({
   declarations: [
     AppComponent,
     
+    
   ],
   imports: [
-    BrowserModule,AppRoutingRoutingModule,FormsModule,HttpClientModule
+    BrowserModule,AppRoutingRoutingModule,FormsModule,HttpClientModule,NgbModalModule,ModalModule.forRoot(),
   ],
-  providers: [
-    LoggedInAuthGuard,
+  providers: [ LoggedInAuthGuard,
     AuthGuard,
+   
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

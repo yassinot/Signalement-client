@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 import { AuthService } from '../../services/auth.service';
@@ -13,12 +14,13 @@ export class SignUpComponent {
     password: ''
   };
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private router:Router) {}
 
   signUp(): void {
     this.authService.signUp(this.user).subscribe(
       () => {
         console.log('is added')
+        this.router.navigate(['/auth//signin']);
         // Sign-up successful, redirect to sign-in page or desired page
       },
       error => {

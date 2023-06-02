@@ -2,21 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import {  Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
+const AUTH_API = environment.api_url;
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000'; // Replace with your actual API URL
+ 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient ,private router:Router) {}
 
   signUp(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/signup`, user);
+    return this.http.post(`${AUTH_API}/auth/signup`, user);
   }
 
   signIn(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/signin`, credentials,{responseType: 'text'}).pipe(
+    return this.http.post(`${AUTH_API}/auth/signin`, credentials,{responseType: 'text'}).pipe(
       tap((response :any)=> {
         console.log(response)
         // Store the JWT token in local storage
@@ -28,6 +31,7 @@ export class AuthService {
   signOut(): void {
     // Clear the token from local storage
     localStorage.removeItem('token');
+    this.router.navigate(['/auth/signin']);
   }
 
   isLoggedIn(): boolean {
